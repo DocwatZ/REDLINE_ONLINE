@@ -17,11 +17,26 @@ Devise.setup do |config|
   config.responder.error_status = :unprocessable_entity
   config.responder.redirect_status = :see_other
 
-  # Account locking after failed attempts
+  # Support login via username or email
+  config.authentication_keys = [ :login ]
+
+  # Account locking after failed attempts — unlock by time (no email dependency)
   config.lock_strategy = :failed_attempts
   config.unlock_keys = [ :email ]
-  config.unlock_strategy = :email
+  config.unlock_strategy = :time
   config.maximum_attempts = 10
   config.unlock_in = 1.hour
   config.last_attempt_warning = true
+
+  # OmniAuth providers (configured via environment variables)
+  if ENV["GITHUB_CLIENT_ID"].present? && ENV["GITHUB_CLIENT_SECRET"].present?
+    config.omniauth :github,
+      ENV["GITHUB_CLIENT_ID"],
+      ENV["GITHUB_CLIENT_SECRET"],
+      scope: "user:email"
+  end
+
+  if ENV["STEAM_API_KEY"].present?
+    config.omniauth :steam, ENV["STEAM_API_KEY"]
+  end
 end
