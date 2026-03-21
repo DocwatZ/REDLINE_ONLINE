@@ -12,9 +12,7 @@ Security via Obscurity — and by design.
 
 REDLINE is a production-ready, self-hosted communication platform built for teams and individuals who demand **absolute privacy** and **real-time performance**. Zero telemetry, zero third-party dependencies. Your data on your hardware.
 
-### Branding
 
-Throughout the UI every instance of the product name is styled as **<span style="color:#e53e3e">RED</span>LINE** — "RED" in red (`#e53e3e`), "LINE" in white (`#f0f2f7`). The compact **RL** logo follows the same rule (**R** = red, **L** = white).
 
 ### Core Features
 - 💬 **Real-time text chat** via ActionCable (WebSockets)
