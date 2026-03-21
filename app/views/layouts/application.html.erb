@@ -37,11 +37,7 @@
             <%= link_to rooms_path,
                   style: "display:flex;align-items:center;gap:.5rem;font-weight:700;font-size:1.125rem;letter-spacing:.05em;text-decoration:none;border-radius:4px",
                   aria: { label: "REDLINE home" } do %>
-              <svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="none">
-                <rect width="32" height="32" rx="8" fill="var(--rl-surface-elevated)"/>
-                <text x="6" y="23" font-family="system-ui,sans-serif" font-weight="700" font-size="18" fill="var(--rl-accent)">R</text>
-                <text x="17" y="23" font-family="system-ui,sans-serif" font-weight="700" font-size="18" fill="var(--rl-text-primary)">L</text>
-              </svg>
+              <%= render "shared/rl_logo", size: 24 %>
               <%= redline_brand_text %>
             <% end %>
           </div>
