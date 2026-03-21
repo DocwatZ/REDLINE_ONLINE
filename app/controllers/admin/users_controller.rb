@@ -15,14 +15,14 @@ class Admin::UsersController < Admin::BaseController
   def lock
     AdminService.lock_account(admin: current_user, user: @user)
     redirect_to admin_user_path(@user), notice: "Account locked."
-  rescue => e
+  rescue StandardError => e
     redirect_to admin_user_path(@user), alert: e.message
   end
 
   def unlock
     AdminService.unlock_account(admin: current_user, user: @user)
     redirect_to admin_user_path(@user), notice: "Account unlocked."
-  rescue => e
+  rescue StandardError => e
     redirect_to admin_user_path(@user), alert: e.message
   end
 
@@ -35,7 +35,7 @@ class Admin::UsersController < Admin::BaseController
 
     AdminService.reset_password(admin: current_user, user: @user, new_password: new_password)
     redirect_to admin_user_path(@user), notice: "Password reset successfully."
-  rescue => e
+  rescue StandardError => e
     redirect_to admin_user_path(@user), alert: e.message
   end
 

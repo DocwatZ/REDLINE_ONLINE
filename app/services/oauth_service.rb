@@ -61,15 +61,15 @@ class OauthService
     user.identities.create!(
       provider: auth_hash["provider"],
       uid: auth_hash["uid"],
-      access_token_ciphertext: credentials["token"],
-      refresh_token_ciphertext: credentials["refresh_token"],
+      access_token: credentials["token"],
+      refresh_token: credentials["refresh_token"],
       expires_at: credentials["expires_at"] ? Time.at(credentials["expires_at"]) : nil
     )
   end
   private_class_method :create_identity
 
   def self.generate_unique_username(base)
-    sanitized = base.to_s.gsub(/[^a-zA-Z0-9_\-]/, "")[0..27]
+    sanitized = base.to_s.gsub(/[^a-zA-Z0-9_\-]/, "")[0..23]
     sanitized = "user" if sanitized.blank?
     candidate = sanitized
     counter = 1

@@ -75,18 +75,20 @@ generate_env() {
   LIVEKIT_API_SECRET=$(openssl rand -hex 24)
 
   # Platform-compatible sed
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    SED_CMD="sed -i ''"
-  else
-    SED_CMD="sed -i"
-  fi
+  sed_replace() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+      sed -i '' "$@"
+    else
+      sed -i "$@"
+    fi
+  }
 
-  $SED_CMD "s|SECRET_KEY_BASE=.*|SECRET_KEY_BASE=${SECRET_KEY_BASE}|" .env
-  $SED_CMD "s|POSTGRES_PASSWORD=.*|POSTGRES_PASSWORD=${POSTGRES_PASSWORD}|" .env
-  $SED_CMD "s|REDIS_PASSWORD=.*|REDIS_PASSWORD=${REDIS_PASSWORD}|" .env
-  $SED_CMD "s|REDIS_URL=.*|REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0|" .env
-  $SED_CMD "s|LIVEKIT_API_KEY=.*|LIVEKIT_API_KEY=${LIVEKIT_API_KEY}|" .env
-  $SED_CMD "s|LIVEKIT_API_SECRET=.*|LIVEKIT_API_SECRET=${LIVEKIT_API_SECRET}|" .env
+  sed_replace "s|SECRET_KEY_BASE=.*|SECRET_KEY_BASE=${SECRET_KEY_BASE}|" .env
+  sed_replace "s|POSTGRES_PASSWORD=.*|POSTGRES_PASSWORD=${POSTGRES_PASSWORD}|" .env
+  sed_replace "s|REDIS_PASSWORD=.*|REDIS_PASSWORD=${REDIS_PASSWORD}|" .env
+  sed_replace "s|REDIS_URL=.*|REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0|" .env
+  sed_replace "s|LIVEKIT_API_KEY=.*|LIVEKIT_API_KEY=${LIVEKIT_API_KEY}|" .env
+  sed_replace "s|LIVEKIT_API_SECRET=.*|LIVEKIT_API_SECRET=${LIVEKIT_API_SECRET}|" .env
 
   echo -e "${GREEN}✓ Environment configured with generated secrets${NC}"
 }

@@ -20,7 +20,8 @@ Devise.setup do |config|
   # Support login via username or email
   config.authentication_keys = [ :login ]
 
-  # Account locking after failed attempts — unlock by time (no email dependency)
+  # Account locking after failed attempts
+  # Using time-based unlock (not email) because email is optional in REDLINE
   config.lock_strategy = :failed_attempts
   config.unlock_keys = [ :email ]
   config.unlock_strategy = :time

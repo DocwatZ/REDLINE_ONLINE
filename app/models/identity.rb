@@ -7,9 +7,9 @@ class Identity < ApplicationRecord
   validates :uid, presence: true
   validates :uid, uniqueness: { scope: :provider }
 
-  # Token encryption via Rails encrypted attributes
-  encrypts :access_token_ciphertext
-  encrypts :refresh_token_ciphertext
+  # Encrypt OAuth tokens at rest
+  encrypts :access_token
+  encrypts :refresh_token
 
   def token_expired?
     expires_at.present? && expires_at < Time.current

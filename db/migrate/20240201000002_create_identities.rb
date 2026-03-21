@@ -6,8 +6,8 @@ class CreateIdentities < ActiveRecord::Migration[7.1]
       t.references :user, null: false, foreign_key: true
       t.string :provider, null: false
       t.string :uid, null: false
-      t.text :access_token_ciphertext
-      t.text :refresh_token_ciphertext
+      t.text :access_token
+      t.text :refresh_token
       t.datetime :expires_at
 
       t.timestamps null: false

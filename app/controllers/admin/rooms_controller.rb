@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Admin::RoomsController < Admin::BaseController
-  before_action :set_room, only: [:show, :destroy, :archive]
+  before_action :set_room, only: [:show, :destroy]
 
   def index
     @rooms = Room.order(created_at: :desc).includes(:owner)

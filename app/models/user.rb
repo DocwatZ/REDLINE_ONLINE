@@ -78,7 +78,8 @@ class User < ApplicationRecord
 
   # Override Devise — password is not required for OAuth-only users
   def password_required?
-    identities.empty? && !persisted? || !password.nil?
+    return false if identities.any? && password.blank?
+    !persisted? || !password.nil? || !password_confirmation.nil?
   end
 
   private
