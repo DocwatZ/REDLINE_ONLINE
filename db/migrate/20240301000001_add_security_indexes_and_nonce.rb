@@ -4,7 +4,6 @@
 # - Add nonce column to messages for AEAD encryption
 # - Add composite index on audit_logs(user_id, created_at) for query performance
 # - Add case-insensitive functional index on users(username)
-# - Add body column to filter from plaintext usage in production
 class AddSecurityIndexesAndNonce < ActiveRecord::Migration[7.1]
   def change
     # Store unique nonce per encrypted message (AEAD requirement)

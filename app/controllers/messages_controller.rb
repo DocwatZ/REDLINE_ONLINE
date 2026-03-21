@@ -31,7 +31,7 @@ class MessagesController < ApplicationController
     can_delete = @message.user == current_user || membership&.moderator?
 
     if can_delete
-      @message.update!(deleted: true, body: nil)
+      @message.update!(deleted: true, body: nil, ciphertext: nil, nonce: nil)
       ActionCable.server.broadcast("chat_#{@room.id}", render_message(@message))
       head :ok
     else
