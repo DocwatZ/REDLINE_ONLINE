@@ -31,7 +31,7 @@ class MessagesController < ApplicationController
     can_delete = @message.user == current_user || membership&.moderator?
 
     if can_delete
-      @message.update!(deleted: true, body: "")
+      @message.update!(deleted: true, body: nil)
       ActionCable.server.broadcast("chat_#{@room.id}", render_message(@message))
       head :ok
     else
@@ -56,13 +56,16 @@ class MessagesController < ApplicationController
   end
 
   def message_params
-    params.require(:message).permit(:body)
+    params.require(:message).permit(:body, :ciphertext, :nonce)
   end
 
+  # Never expose raw body in broadcast — use display_body
   def render_message(message)
     {
       id: message.id,
       body: message.display_body,
+      ciphertext: message.ciphertext,
+      nonce: message.nonce,
       room_id: message.room_id,
       user_id: message.user_id,
       display_name: message.user.display_name,

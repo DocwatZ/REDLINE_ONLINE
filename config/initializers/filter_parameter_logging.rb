@@ -6,5 +6,5 @@
 Rails.application.config.filter_parameters += [
   :passw, :secret, :token, :_key, :crypt, :salt, :certificate, :otp, :ssn,
   :recovery_code, :code_digest, :access_token, :refresh_token, :private_key,
-  :ciphertext, :encrypted_room_key, :public_key
+  :ciphertext, :encrypted_room_key, :public_key, :body, :nonce
 ]

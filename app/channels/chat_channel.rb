@@ -13,7 +13,9 @@ class ChatChannel < ApplicationCable::Channel
 
     message = @room.messages.create!(
       user: current_user,
-      body: data["body"].to_s.strip.first(4000)
+      body: data["body"].to_s.strip.first(4000).presence,
+      ciphertext: data["ciphertext"],
+      nonce: data["nonce"]
     )
 
     ActionCable.server.broadcast("chat_#{@room.id}", render_message(message))
@@ -25,10 +27,13 @@ class ChatChannel < ApplicationCable::Channel
 
   private
 
+  # Never expose raw body in broadcast — use display_body
   def render_message(message)
     {
       id: message.id,
       body: message.display_body,
+      ciphertext: message.ciphertext,
+      nonce: message.nonce,
       room_id: message.room_id,
       user_id: message.user_id,
       display_name: message.user.display_name,

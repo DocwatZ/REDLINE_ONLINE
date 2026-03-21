@@ -5,7 +5,8 @@ class Identity < ApplicationRecord
 
   validates :provider, presence: true
   validates :uid, presence: true
-  validates :uid, uniqueness: { scope: :provider }
+  validates :uid, uniqueness: { scope: :provider, message: "has already been linked for this provider" }
+  validates :provider, uniqueness: { scope: :user_id, message: "is already linked to this account" }
 
   # Encrypt OAuth tokens at rest
   encrypts :access_token

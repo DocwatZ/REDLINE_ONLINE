@@ -6,9 +6,11 @@ class RecoveryCodeService
     RecoveryCode.generate_for(user, count: count)
   end
 
-  # Authenticate a user via recovery code
+  # Authenticate a user via recovery code.
+  # Normalizes login input (downcase + strip) for consistent lookup.
   def self.authenticate(username_or_email, plaintext_code)
-    user = User.find_for_database_authentication(login: username_or_email)
+    normalized_login = username_or_email.to_s.downcase.strip
+    user = User.find_for_database_authentication(login: normalized_login)
     return nil unless user
 
     recovery_code = RecoveryCode.verify(user, plaintext_code)

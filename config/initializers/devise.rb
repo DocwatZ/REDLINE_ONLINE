@@ -4,8 +4,8 @@ Devise.setup do |config|
   config.mailer_sender = ENV.fetch("DEVISE_MAILER_FROM", "redline@example.com")
   require "devise/orm/active_record"
 
-  config.case_insensitive_keys = [ :email ]
-  config.strip_whitespace_keys = [ :email ]
+  config.case_insensitive_keys = [ :email, :login ]
+  config.strip_whitespace_keys = [ :email, :login ]
   config.skip_session_storage = [ :http_auth ]
   config.stretches = Rails.env.test? ? 1 : 12
   config.reconfirmable = false

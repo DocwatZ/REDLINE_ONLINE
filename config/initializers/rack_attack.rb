@@ -29,6 +29,11 @@ class Rack::Attack
     req.ip if req.path == "/recovery_login" && req.post?
   end
 
+  # Throttle message sending (POST to /rooms/:id/messages)
+  throttle("messages/ip", limit: 30, period: 1.minute) do |req|
+    req.ip if req.path.match?(%r{^/rooms/.+/messages$}) && req.post?
+  end
+
   # Throttle admin actions
   throttle("admin/ip", limit: 30, period: 1.minute) do |req|
     req.ip if req.path.start_with?("/admin")
